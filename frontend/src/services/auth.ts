@@ -19,3 +19,22 @@ export const login = async (email: string, password: string) => {
 
   return data;
 };
+
+//logout
+export async function logout() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/logout', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Logout failed');
+  }
+
+  localStorage.removeItem('token');
+}

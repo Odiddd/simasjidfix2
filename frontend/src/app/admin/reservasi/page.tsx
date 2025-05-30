@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { 
@@ -32,6 +33,14 @@ export default function ReservasiPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Reservasi[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.replace('/admin/login'); 
+    }
+  }, [router]);
 
   useEffect(() => {
     fetchData();
@@ -47,13 +56,18 @@ export default function ReservasiPage() {
   }, [data, searchTerm]);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const res = await fetch('http://localhost:8000/api/reservasi');
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
       const result = await res.json();
       setData(result);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
+      setData([]);  // pastikan data tetap array walau error
+    } finally {
       setLoading(false);
     }
   };
@@ -67,9 +81,12 @@ export default function ReservasiPage() {
 
         if (res.ok) {
           setData(data.filter(item => item.reservasi_id !== id));
+        } else {
+          alert('Gagal menghapus reservasi');
         }
       } catch (error) {
         console.error('Error deleting reservation:', error);
+        alert('Terjadi kesalahan saat menghapus');
       }
     }
   };
@@ -85,12 +102,10 @@ export default function ReservasiPage() {
   const formatTime = (timeString: string) => {
     if (!timeString) return '-';
     
-    // Jika format sudah HH:MM
     if (timeString.includes(':')) {
       return timeString;
     }
     
-    // Jika format timestamp, konversi ke HH:MM
     try {
       const time = new Date(`2000-01-01T${timeString}`);
       return time.toLocaleTimeString('id-ID', {

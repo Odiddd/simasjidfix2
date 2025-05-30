@@ -26,9 +26,9 @@ export default function CreateReservasi() {
     keterangan: "",
     masuk_transaksi: false,
   });
-
+  
   useEffect(() => {
-    fetch("http://localhost:8000/api/tempat-reservasi")
+    fetch("http://localhost:8000/api/tempatReservasi")
       .then((res) => res.json())
       .then((data) => setTempatList(data));
   }, []);
@@ -40,13 +40,15 @@ export default function CreateReservasi() {
     const { name, value, type } = target;
 
     setFormData({
-      ...formData,
-      [name]:
-        type === "checkbox" && target instanceof HTMLInputElement
-          ? target.checked
-          : value,
-    });
-  };
+    ...formData,
+    [name]:
+      type === "checkbox" && target instanceof HTMLInputElement
+        ? target.checked
+        : name === "tempat_reservasi_id"
+        ? Number(value) 
+        : value,
+  });
+};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +58,7 @@ export default function CreateReservasi() {
       body: JSON.stringify(formData),
     });
     if (res.ok) {
-      router.push("/reservasi");
+      router.push("/admin/reservasi");
     }
   };
 

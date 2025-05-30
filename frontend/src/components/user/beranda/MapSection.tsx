@@ -3,10 +3,10 @@ import Image from 'next/image';
 
 const MapSection: React.FC = () => {
   return (
-    <div className="w-full bg-black text-white p-6 rounded-lg">
+    <div className="w-full bg-gray-900 text-white p-6 rounded-lg">
       <div className="flex flex-col items-center mb-4">
-        <h1 className="text-2xl font-bold text-yellow-500">Informasi</h1>
-        <p className="text-sm text-gray-300">Deskripsi Singkat</p>
+        <h1 className="text-2xl font-bold text-yellow-500">Lokasi Masjid Al-Muhajirin</h1>
+        <p className="text-sm text-gray-300"></p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 justify-between">

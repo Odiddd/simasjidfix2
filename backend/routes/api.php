@@ -11,6 +11,7 @@ Route::get('/test', function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
+
 /////////// user controller
 use App\Http\Controllers\Api\userController;
 
@@ -63,13 +64,22 @@ Route::delete('/transaksi/{id}', [transaksiController::class, 'destroy']);
 use App\Http\Controllers\Api\reservasiController;
 
 Route::prefix('reservasi')->group(function () {
-    Route::get('/', [reservasiController::class, 'index']);           // GET semua data
-    Route::post('/', [reservasiController::class, 'store']);          // POST buat reservasi baru
-    Route::get('/{id}', [reservasiController::class, 'show']);        // GET detail reservasi
-    Route::put('/{id}', [reservasiController::class, 'update']);      // PUT update reservasi
-    Route::delete('/{id}', [reservasiController::class, 'destroy']);  // DELETE hapus reservasi
+    Route::get('/', [reservasiController::class, 'index']);          
+    Route::post('/', [reservasiController::class, 'store']);         
+    Route::get('/{id}', [reservasiController::class, 'show']);     
+    Route::put('/{id}', [reservasiController::class, 'update']);      
+    Route::delete('/{id}', [reservasiController::class, 'destroy']);  
+
+    
 });
 
-use App\Http\Controllers\Api\tempatReservasiController;
+use App\Http\Controllers\Api\TempatReservasiController;
 
-Route::apiResource('tempatReservasi', tempatReservasiController::class);
+Route::prefix('tempatReservasi')->group(function () {
+    Route::get('/', [TempatReservasiController::class, 'index']);           
+    Route::post('/', [TempatReservasiController::class, 'store']);          
+    Route::get('/{id}', [TempatReservasiController::class, 'show']);        
+    Route::put('/{id}', [TempatReservasiController::class, 'update']);      
+    Route::patch('/{id}', [TempatReservasiController::class, 'update']);      
+    Route::delete('/{id}', [TempatReservasiController::class, 'destroy']);  
+});

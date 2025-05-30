@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect,useState} from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/admin/dashboard/Sidebar';
 import Header from '@/components/admin/dashboard/Header';
@@ -10,13 +10,15 @@ import ProfitChart from '@/components/admin/dashboard/ProfitChart';
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.replace('/admin/login'); // Redirect jika tidak ada token
+      router.replace('/admin/login'); 
     }
   }, [router]);
+  //  if (!isClient) return null;
 
   return (
     <div className="flex min-h-screen bg-gray-900 text-white">

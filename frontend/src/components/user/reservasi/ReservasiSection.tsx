@@ -1,8 +1,7 @@
 // src/components/ReservationSection.tsx
 "use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React from 'react';
 import { Carousel } from '@/components/ui/Carousel';
 
 const ReservationSection: React.FC = () => {
@@ -30,30 +29,8 @@ const ReservationSection: React.FC = () => {
           </div>
           
           {/* Right Content - Carousel */}
-          <div className="w-full md:w-1/2 relative">
+          <div className="w-full md:w-1/2">
             <Carousel images={images} />
-            
-            {/* Navigation arrows */}
-            <div className="absolute inset-y-0 left-0 flex items-center">
-              <button className="bg-white bg-opacity-50 rounded-full p-2 ml-2">
-                &lt;
-              </button>
-            </div>
-            <div className="absolute inset-y-0 right-0 flex items-center">
-              <button className="bg-white bg-opacity-50 rounded-full p-2 mr-2">
-                &gt;
-              </button>
-            </div>
-            
-            {/* Indicators */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-              {images.map((_, index) => (
-                <button 
-                  key={index}
-                  className={`h-2 w-2 rounded-full ${index === 0 ? 'bg-white' : 'bg-gray-400'}`}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </div>
